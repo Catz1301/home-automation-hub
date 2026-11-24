@@ -66,6 +66,8 @@ WiFiManager wifiManager = WiFiManager();
 TimeManager timeManager;
 ScreenManager screenManager = ScreenManager();
 
+// Screens
+CommunicationsScreen commsScreen = CommunicationsScreen(static_cast<ScreenID>(1), &tft);
 
 void setup()
 {
@@ -78,7 +80,7 @@ void setup()
   // timeClient.begin();
   timeManager = TimeManager();
   timeManager.syncTime(rtc);
-  CommunicationsScreen commsScreen = CommunicationsScreen(static_cast<ScreenID> (1), &tft);
+  
   screenManager.addScreen(commsScreen);
 }
 
@@ -90,6 +92,9 @@ void loop(void)
 
   StatusBar::clear(&rtc, &tft);
   StatusBar::draw(&rtc, &tft);
+  uint64_t currentTimeMs = 0;
+  timeManager.getUnixMs(rtc, currentTimeMs);
+  screenManager.updateAndDraw(currentTimeMs);
 
   /* tft.fillScreen(ST7796S_BLACK);
   if (WiFi.isConnected()) {
