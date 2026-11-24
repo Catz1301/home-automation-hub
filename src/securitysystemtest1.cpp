@@ -66,6 +66,7 @@ WiFiManager wifiManager = WiFiManager();
 TimeManager timeManager;
 ScreenManager screenManager = ScreenManager();
 
+
 void setup()
 {
   //  pinMode(7,OUTPUT);/

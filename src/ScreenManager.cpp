@@ -1,6 +1,10 @@
 #include "ScreenManager.h"
 #include "Screen.h"
 
+ScreenManager::ScreenManager() {
+
+}
+
 ScreenManager::~ScreenManager() {
     for (int i = 0; i < _screens.size(); ++i) {
         delete _screens.at(i);

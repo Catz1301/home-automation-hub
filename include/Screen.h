@@ -6,8 +6,10 @@ typedef int ScreenID;
 
 class Screen {
     public:
-    Screen(int);
-    virtual ~Screen();
+    Screen(int id, Adafruit_ST7796S_kbv *tftScreen) : _id(id), tft(tftScreen) {}
+    ~Screen() {
+        // free(tft);
+    }
     virtual void draw() = 0;
     virtual void update(uint64_t currentUnixMs) = 0; // for main loop
     virtual void updateScreen() = 0; // if this screen needs an update

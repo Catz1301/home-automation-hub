@@ -7,11 +7,18 @@
 #include "utils.h"
 #include "CommunicationsScreen.h"
 
-CommunicationsScreen::CommunicationsScreen(ScreenID id, Adafruit_ST7796S_kbv *tft) : Screen(id) {
+CommunicationsScreen::CommunicationsScreen(ScreenID id, Adafruit_ST7796S_kbv *tft) : Screen(id, tft)
+{
     _id = id;
     _updateIntervalMs = 10 * 1000;
     _waitForInterval = true;
     _lastUpdatedMs = INT32_MAX;
+    Serial.println("[CommunicationsScreen] creating instance");
+}
+
+CommunicationsScreen::~CommunicationsScreen()
+{
+    Serial.println("[CommunicationsScreen] destroying instance");
 }
 
 void CommunicationsScreen::draw() {
@@ -56,4 +63,8 @@ void CommunicationsScreen::update(uint64_t currentUnixMs)
         this->needsRedraw = true;
     }
     _lastUpdatedMs = currentUnixMs;
+}
+
+void CommunicationsScreen::updateScreen() {
+    
 }

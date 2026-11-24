@@ -3,6 +3,7 @@
 class ScreenManager {
 public:
     ScreenManager();
+    ~ScreenManager();
     void updateAndDraw(uint64_t currentUnixMs);
     void addScreen(Screen &newScreen);
     void changeScreen(ScreenID newScreenId);

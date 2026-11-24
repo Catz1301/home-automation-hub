@@ -5,9 +5,10 @@
 
 #include "Screen.h"
 
-class CommunicationsScreen : Screen {
+class CommunicationsScreen : public Screen {
     public:
-    CommunicationsScreen(ScreenID id, Adafruit_ST7796S_kbv *tft);
+    CommunicationsScreen(ScreenID id, Adafruit_ST7796S_kbv *tftScreen);
+    ~CommunicationsScreen();
     void draw(); // if screen needs redraw, go here;
     void update(uint64_t currentUnixMs); // from main loop. if redraw isn't needed, draw returns immediately
     void updateScreen(); //to update certain parts (buttons, circles, etc)
