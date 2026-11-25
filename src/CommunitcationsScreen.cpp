@@ -7,7 +7,7 @@
 #include "utils.h"
 #include "CommunicationsScreen.h"
 
-CommunicationsScreen::CommunicationsScreen(ScreenID id, Adafruit_ST7796S_kbv *tft) : Screen(id, tft)
+CommunicationsScreen::CommunicationsScreen(ScreenID id, Adafruit_ST7796S_kbv *tft) : Screen(id, tft, true, 10000)
 {
     _id = id;
     _updateIntervalMs = 10 * 1000;
@@ -22,7 +22,7 @@ CommunicationsScreen::~CommunicationsScreen()
 }
 
 void CommunicationsScreen::draw() {
-    tft->fillScreen(ST7796S_BLACK);
+    // tft->fillScreen(ST7796S_BLACK);
     if (WiFi.isConnected())
     {
         tft->fillCircle(10, 32, 8, ST7796S_GREEN);

@@ -4,7 +4,7 @@
 #include "TimeManager.h"
 #include <Bonezegei_DS1307.h>
 
-TimeManager::TimeManager() : _timeReady(false)
+TimeManager::TimeManager(Bonezegei_DS1307 &rtc) : _rtc(rtc), _timeReady(false)
 {
     _timeReady = initTime();
 };
@@ -30,6 +30,19 @@ bool TimeManager::initTime()
     else
     {
         Serial.println("[TimeManager] Initialization progress. Retrieved local time");
+        int hour = timeinfo.tm_hour;
+        int minute = timeinfo.tm_min;
+        int second = timeinfo.tm_sec;
+
+        int month = timeinfo.tm_mon + 1;
+        int day = timeinfo.tm_mday;
+        int year = timeinfo.tm_year % 100;
+        char time[32], date[32];
+        snprintf(time, sizeof(time), "%02d:%02d:%02d", hour, minute, second);
+        snprintf(date, sizeof(date), "%d/%d/%d", month, day, year);
+        _rtc.setTime(time);
+        _rtc.setDate(date);
+
         _timeReady = true;
     }
     Serial.println("[TimeManager] initialization complete.");
@@ -38,7 +51,7 @@ bool TimeManager::initTime()
     return _timeReady;
 };
 
-void TimeManager::syncTime(Bonezegei_DS1307 &rtc)
+void TimeManager::syncTime()
 {
 
     if (!WiFiManager::confirmConnection(3) || !_timeReady)
@@ -58,39 +71,39 @@ void TimeManager::syncTime(Bonezegei_DS1307 &rtc)
     char time[32], date[32];
     snprintf(time, sizeof(time), "%02d:%02d:%02d", hour, minute, second);
     snprintf(date, sizeof(date), "%d/%d/%d", month, day, year);
-    rtc.setTime(time);
-    rtc.setDate(date);
+    _rtc.setTime(time);
+    _rtc.setDate(date);
 
     
 
-    Serial.println(rtc.getDate());
-    Serial.println(rtc.getYear());
+    Serial.println(_rtc.getDate());
+    Serial.println(_rtc.getYear());
     // rtc.setDay(timeinfo.tm_wday);
     
 }
 
-bool TimeManager::getUnixMs(Bonezegei_DS1307 &rtc, uint64_t &timestampMs)
+bool TimeManager::getUnixMs(uint64_t &timestampMs)
 {
-    if (!rtc.getTime())
+    if (!_rtc.getTime())
         return false;
 
     struct tm timeinfo = {};
-    const uint8_t format = rtc.getFormat();
-    int hour = rtc.getHour();
+    const uint8_t format = _rtc.getFormat();
+    int hour = _rtc.getHour();
 
     if (format == 12)
     {
-        const bool isPm = rtc.getAMPM() == 0;
+        const bool isPm = _rtc.getAMPM() == 0;
         if (hour < 1 || hour > 12)
             return false;
         hour = hour % 12 + (isPm ? 12 : 0);
     }
 
-    const int month = rtc.getMonth();
-    const int day = rtc.getDate();
-    const int year = rtc.getYear();
-    const int minute = rtc.getMinute();
-    const int second = rtc.getSeconds();
+    const int month = _rtc.getMonth();
+    const int day = _rtc.getDate();
+    const int year = _rtc.getYear();
+    const int minute = _rtc.getMinute();
+    const int second = _rtc.getSeconds();
     if (month < 1 || month > 12 || day < 1 || day > 31 ||
         hour > 23 || minute > 59 || second > 59)
         return false;
