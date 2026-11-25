@@ -59,7 +59,7 @@ void CommunicationsScreen::draw() {
 
 void CommunicationsScreen::update(uint64_t currentUnixMs)
 {
-    if (currentUnixMs - _lastUpdatedMs > 1000) {
+    if (currentUnixMs - _lastUpdatedMs > 10000) { // 10 seconds so as to not flood my poor rpi
         this->needsRedraw = true;
     }
     _lastUpdatedMs = currentUnixMs;
