@@ -35,6 +35,7 @@
 #include "TimeManager.h"
 #include "Screen.h"
 #include "ScreenManager.h"
+#include "boot_splash.h"
 #include "CommunicationsScreen.h"
 
 #include <Bonezegei_DS1307.h>
@@ -77,6 +78,7 @@ void setup()
   Serial.begin(9600);
   rtc.begin();
   tft.begin();
+  // tft.drawRGBBitmap(0, 0, static_cast(<uint16_t*>(gimpimage.pixel_data), gimpimage.width, gimpimage.height);
   wifiManager.init(ssid, password);
   // timeClient.begin();
 
