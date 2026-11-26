@@ -68,6 +68,7 @@ ScreenManager screenManager = ScreenManager();
 
 // Screens
 CommunicationsScreen commsScreen = CommunicationsScreen(static_cast<ScreenID>(1), &tft);
+ulong lastLoopus = 0;
 
 void setup()
 {
@@ -78,22 +79,24 @@ void setup()
   tft.begin();
   wifiManager.init(ssid, password);
   // timeClient.begin();
-  
-  
+
   screenManager.addScreen(&commsScreen);
   screenManager.changeScreen(static_cast<ScreenID>(1));
 }
 
-
-
 void loop(void)
 {
-  ulong startMs = millis();
+  ulong startus = micros();
   tft.setRotation(3);
   uint64_t currentTimeMs = 0;
-  if (!screenManager.requestHideStatusBar) {
-    StatusBar::clear(&rtc, &tft);
-    StatusBar::draw(&rtc, &tft);
+  if ((lastLoopus == 0 || lastLoopus > startus) || (startus - lastLoopus >= 99000))
+  {
+    if (!screenManager.requestHideStatusBar)
+    {
+      StatusBar::clear(&rtc, &tft);
+      StatusBar::draw(&rtc, &tft);
+    }
+    lastLoopus = micros();
   }
   timeManager.getUnixMs(currentTimeMs);
   screenManager.updateAndDraw(currentTimeMs);

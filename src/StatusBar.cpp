@@ -11,10 +11,10 @@ void StatusBar::updateSeconds(Bonezegei_DS1307 *rtc, Adafruit_ST7796S_kbv *tft)
     }
 }
 void StatusBar::clear(Bonezegei_DS1307 *rtc, Adafruit_ST7796S_kbv *tft) {
-    tft->fillRoundRect(0, 0, 480, 18, 0, convertHEXto565(0xD9AE94));
+    tft->fillRoundRect(0, 0, 480, __STATUSBAR_HEIGHT, 0, convertHEXto565(0xD9AE94));
 }
 void StatusBar::draw(Bonezegei_DS1307 *rtc, Adafruit_ST7796S_kbv *tft) {
-    tft->fillRoundRect(0, 0, 480, 18, 0, convertHEXto565(0xD9AE94));
+    tft->fillRoundRect(0, 0, 480, __STATUSBAR_HEIGHT, 0, convertHEXto565(0xD9AE94));
     if (rtc->getTime())
     {
         // Serial.printf only does not work on atmega
@@ -28,8 +28,8 @@ void StatusBar::draw(Bonezegei_DS1307 *rtc, Adafruit_ST7796S_kbv *tft) {
         tft->setTextSize(2);
         tft->print(time_data);
         tft->setCursor(384, 2);
-        Serial.printf("Date %02d-%02d-%d \n", rtc->getMonth(), rtc->getDate(), 26);
-        Serial.printf(date_data);
+        // Serial.printf("Date %02d-%02d-%d \n", rtc->getMonth(), rtc->getDate(), 26);
+        // Serial.printf(date_data);
         tft->print(date_data);
     }
 }

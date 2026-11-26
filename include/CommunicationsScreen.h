@@ -11,7 +11,7 @@ class CommunicationsScreen : public Screen {
     ~CommunicationsScreen();
     void draw(); // if screen needs redraw, go here;
     void update(uint64_t currentUnixMs); // from main loop. if redraw isn't needed, draw returns immediately
-    void updateScreen(); //to update certain parts (buttons, circles, etc)
+    void updateScreen(uint8_t reasonFlag); //to update certain parts (buttons, circles, etc)
 
     bool testConnection(char *str)
     {

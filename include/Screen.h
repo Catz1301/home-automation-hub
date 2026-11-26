@@ -19,7 +19,7 @@ public:
     }
     virtual void draw() = 0;
     virtual void update(uint64_t currentUnixMs) = 0; // for main loop
-    virtual void updateScreen() = 0;                 // if this screen needs an update
+    virtual void updateScreen(uint8_t reasonFlag = 0) = 0;                 // if this screen needs an update
     const ScreenID getId()
     {
         return _id;

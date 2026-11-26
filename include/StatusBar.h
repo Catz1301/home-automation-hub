@@ -4,7 +4,7 @@
 
 #ifndef __STATUSBAR_H
 #define __STATUSBAR_H
-
+#define __STATUSBAR_HEIGHT 18
 class StatusBar {
     public:
         static void draw(Bonezegei_DS1307 *rtc, Adafruit_ST7796S_kbv *tft);

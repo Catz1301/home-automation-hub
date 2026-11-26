@@ -207,7 +207,9 @@
  .pio/libdeps/esp32dev/Adafruit\ GFX\ Library/Adafruit_SPITFT.h \
  .pio/libdeps/esp32dev/Adafruit\ GFX\ Library/Adafruit_GFX.h \
  .pio/libdeps/esp32dev/Adafruit\ GFX\ Library/Adafruit_SPITFT_Macros.h \
- include/Screen.h include/utils.h include/CommunicationsScreen.h \
+ include/Screen.h include/utils.h include/StatusBar.h \
+ .pio/libdeps/esp32dev/Bonezegei_DS1307/src/Bonezegei_DS1307.h \
+ include/utils.h include/CommunicationsScreen.h \
  /home/minty-whiskers/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src/HTTPClient.h \
  /home/minty-whiskers/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiClient.h \
  /home/minty-whiskers/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src/WiFiClientSecure.h \

@@ -3,3 +3,6 @@
 .vscode/launch.json
 .vscode/ipch
 .pio/build
+.pio/build/esp32dev/.sconsign312.dblite
+.pio/build/esp32dev/.sconsign312.dblite
+.pio/build/esp32dev/firmware.bin
