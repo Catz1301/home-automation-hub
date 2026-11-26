@@ -53,11 +53,12 @@ Bonezegei_DS1307 rtc(0x68);
 
 #define TC_SCK 13
 #define TC_MOSI 5
+#define TC_MOSI 5
 #define TC_MISO 12
 #define TC_CS 33
 #define TC_IRQ 32
-const char *ssid = "ARRIS-959D";
-const char *password = "4Ym6jHhd4y7y";
+const char *ssid = "Sanctuary";
+const char *password = "subspace";
 // const char *ntpServer = "pool.ntp.org";
 
 // const long gmtOffset_sec = -18000;
