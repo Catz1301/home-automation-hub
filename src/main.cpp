@@ -51,12 +51,12 @@ Bonezegei_DS1307 rtc(0x68);
 #define TFT_RST 27 // RST can be set to -1 if you tie it to Arduino's reset
 
 #define TC_SCK 13
-#define TC_MOSI 35
+#define TC_MOSI 5
 #define TC_MISO 12
 #define TC_CS 33
 #define TC_IRQ 32
-const char *ssid = "ARRIS-959D";
-const char *password = "4Ym6jHhd4y7y";
+const char *ssid = "Sanctuary";
+const char *password = "subspace";
 // const char *ntpServer = "pool.ntp.org";
 
 // const long gmtOffset_sec = -18000;
@@ -84,8 +84,10 @@ void setup()
   Serial.begin(9600);
   rtc.begin();
   tft.begin();
-  tcSPI.begin(TC_SCK, TC_MISO, TC_MOSI, TC_IRQ);
-  tc.begin(tcSPI);
+  tcSPI.begin(TC_SCK, TC_MISO, TC_MOSI, TC_CS);
+  if (!tc.begin(tcSPI)) {
+    Serial.println("[TouchManager]: Could not initialize touchscreen");
+  }
   wifiManager.init(ssid, password);
   // timeClient.begin();
 
@@ -101,6 +103,9 @@ void loop(void)
   if (tc.touched()) {
     Serial.println("[TouchManager] touch detected");
     TS_Point touchPoint = tc.getPoint();
+    Serial.print(touchPoint.x);
+    Serial.print(" ");
+    Serial.println(touchPoint.y);
     tft.fillCircle(touchPoint.x, touchPoint.y, 4, ST7796S_CYAN);
   }
   uint64_t currentTimeMs = 0;
