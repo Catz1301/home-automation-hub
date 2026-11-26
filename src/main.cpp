@@ -50,6 +50,11 @@ Bonezegei_DS1307 rtc(0x68);
 #define TFT_DC 25
 #define TFT_RST 27 // RST can be set to -1 if you tie it to Arduino's reset
 
+#define TC_SCK 13
+#define TC_MOSI 35
+#define TC_MISO 12
+#define TC_CS 33
+#define TC_IRQ 32
 const char *ssid = "ARRIS-959D";
 const char *password = "4Ym6jHhd4y7y";
 // const char *ntpServer = "pool.ntp.org";
@@ -62,8 +67,8 @@ const char *password = "4Ym6jHhd4y7y";
 Adafruit_ST7796S_kbv tft = Adafruit_ST7796S_kbv(TFT_CS, TFT_DC, TFT_RST);
 // SoftSPI - note that on some processors this might be *faster* than hardware SPI!
 // Adafruit_ST7796S_kbv tft = Adafruit_ST7796S_kbv(TFT_CS, TFT_DC, MOSI, SCK, TFT_RST, MISO);
-XPT2046_Touchscreen tc = XPT2046_Touchscreen(33, 32);
-
+XPT2046_Touchscreen tc = XPT2046_Touchscreen(TC_CS, TC_IRQ);
+SPIClass tcSPI = SPIClass();
 WiFiManager wifiManager = WiFiManager();
 TimeManager timeManager = TimeManager(rtc);
 ScreenManager screenManager = ScreenManager();
@@ -79,7 +84,8 @@ void setup()
   Serial.begin(9600);
   rtc.begin();
   tft.begin();
-  tc.begin();
+  tcSPI.begin(TC_SCK, TC_MISO, TC_MOSI, TC_IRQ);
+  tc.begin(tcSPI);
   wifiManager.init(ssid, password);
   // timeClient.begin();
 
@@ -91,6 +97,12 @@ void loop(void)
 {
   ulong startus = micros();
   tft.setRotation(3);
+  tc.setRotation(3);
+  if (tc.touched()) {
+    Serial.println("[TouchManager] touch detected");
+    TS_Point touchPoint = tc.getPoint();
+    tft.fillCircle(touchPoint.x, touchPoint.y, 4, ST7796S_CYAN);
+  }
   uint64_t currentTimeMs = 0;
   if ((startus - lastLoopus >= 99000) || (lastLoopus == 0 || lastLoopus > startus))
   {
