@@ -38,6 +38,7 @@
 #include "CommunicationsScreen.h"
 
 #include <Bonezegei_DS1307.h>
+#include <XPT2046_Touchscreen.h>
 void setup();
 void loop();
 Bonezegei_DS1307 rtc(0x68);
@@ -61,6 +62,7 @@ const char *password = "4Ym6jHhd4y7y";
 Adafruit_ST7796S_kbv tft = Adafruit_ST7796S_kbv(TFT_CS, TFT_DC, TFT_RST);
 // SoftSPI - note that on some processors this might be *faster* than hardware SPI!
 // Adafruit_ST7796S_kbv tft = Adafruit_ST7796S_kbv(TFT_CS, TFT_DC, MOSI, SCK, TFT_RST, MISO);
+XPT2046_Touchscreen tc = XPT2046_Touchscreen(33, 32);
 
 WiFiManager wifiManager = WiFiManager();
 TimeManager timeManager = TimeManager(rtc);
@@ -77,6 +79,7 @@ void setup()
   Serial.begin(9600);
   rtc.begin();
   tft.begin();
+  tc.begin();
   wifiManager.init(ssid, password);
   // timeClient.begin();
 

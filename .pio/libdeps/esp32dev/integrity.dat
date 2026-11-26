@@ -1,3 +1,4 @@
-bonezegei/Bonezegei_DS1307@^1.0.4
-https://github.com/prenticedavid/Adafruit_ST7796S_kbv.git
 adafruit/Adafruit GFX Library@^1.13.0
+https://github.com/prenticedavid/Adafruit_ST7796S_kbv.git
+https://github.com/PaulStoffregen/XPT2046_Touchscreen.git
+bonezegei/Bonezegei_DS1307@^1.0.4
