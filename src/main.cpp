@@ -89,7 +89,7 @@ void loop(void)
   ulong startus = micros();
   tft.setRotation(3);
   uint64_t currentTimeMs = 0;
-  if ((lastLoopus == 0 || lastLoopus > startus) || (startus - lastLoopus >= 99000))
+  if ((startus - lastLoopus >= 99000) || (lastLoopus == 0 || lastLoopus > startus))
   {
     if (!screenManager.requestHideStatusBar)
     {
