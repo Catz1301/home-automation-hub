@@ -47,3 +47,7 @@ void ScreenManager::changeScreen(ScreenID newScreenId)
         }
     }
 }
+
+Screen* ScreenManager::getActiveScreen() {
+    return _activeScreen;
+}
