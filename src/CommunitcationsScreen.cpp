@@ -70,6 +70,7 @@ void CommunicationsScreen::update(uint64_t currentUnixMs)
 
 void CommunicationsScreen::updateScreen(uint8_t reasonFlag = 0)
 {
+    tft->setTextSize(2);
     bool wifiConnected = WiFi.isConnected(), whiskers_one = testConnection("http://whiskers.one/"), catz_wtf = testConnection("http://catz.wtf/");
     tft->fillCircle(10, 32, 8, (wifiConnected) ? ST7796S_GREEN : convertHEXto565(0xff0000));
     tft->fillCircle(10, 64, 8, (whiskers_one) ? ST7796S_GREEN : convertHEXto565(0xff0000));

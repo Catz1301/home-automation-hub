@@ -158,3 +158,7 @@ TS_Point TouchManager::getTouchedPoint()
 
     return TS_Point{screenX, screenY, touchPoint.z};
 }
+
+bool TouchManager::touched() {
+    return tc.touched();
+}

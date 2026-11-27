@@ -1,3 +1,6 @@
+#ifndef __TOUCH_MANAGER_H
+#define __TOUCH_MANAGER_H
+
 #include <Arduino.h>
 #include <Preferences.h>
 #include <XPT2046_Touchscreen.h>
@@ -13,6 +16,7 @@ class TouchManager {
         int mapTouchCoordinate(int value, int rawA, int rawB, int screenA, int screenB, int screenSize);
         void loadTouchCalibration();
         TS_Point getTouchedPoint();
+        bool touched();
 
         struct TouchCalibration
         {
@@ -35,3 +39,5 @@ class TouchManager {
         Preferences _preferences;
         SPIClass _tcSPI;
 };
+
+#endif

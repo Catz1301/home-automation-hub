@@ -23,9 +23,10 @@
 
   Written by Limor Fried/Ladyada for Adafruit Industries.
   MIT license, all text above must be included in any redistribution
- ****************************************************/
-
-#include <SPI.h>
+  ****************************************************/
+ 
+ #include <SPI.h>
+ #include <Preferences.h>
 #include "Adafruit_GFX.h"
 #include "Adafruit_ST7796S_kbv.h"
 #include "utils.h"
@@ -39,7 +40,7 @@
 
 #include <Bonezegei_DS1307.h>
 #include "TouchManager.h"
-#include <Preferences.h>
+#include "Navigator.h"
 void setup();
 void loop();
 Bonezegei_DS1307 rtc(0x68);
@@ -74,7 +75,7 @@ WiFiManager wifiManager = WiFiManager();
 TimeManager timeManager = TimeManager(rtc);
 ScreenManager screenManager = ScreenManager();
 Preferences preferences;
-
+Navigator nav = Navigator();
 // Screens
 CommunicationsScreen commsScreen = CommunicationsScreen(static_cast<ScreenID>(1), &tft);
 ulong lastLoopus = 0;
@@ -94,6 +95,7 @@ void setup()
   wifiManager.init(ssid, password);
   // timeClient.begin();
 
+  nav.init(&tft);
   screenManager.addScreen(&commsScreen);
   screenManager.changeScreen(static_cast<ScreenID>(1));
   Serial.println("Send 'c' over serial to start touch calibration.");
@@ -127,6 +129,8 @@ void loop(void)
     }
     lastLoopus = micros();
   }
+  nav.update(&touchManager);
+  nav.drawNavButtons(&tft);
   timeManager.getUnixMs(currentTimeMs);
   screenManager.updateAndDraw(currentTimeMs);
   // delay ();
